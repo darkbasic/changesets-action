@@ -383,6 +383,7 @@ export async function getVersionPrBody({
 
 type VersionOptions = {
   script?: string;
+  packageManager: string,
   githubToken: string;
   cwd?: string;
   prTitle?: string;
@@ -398,6 +399,7 @@ type RunVersionResult = {
 
 export async function runVersion({
   script,
+  packageManager,
   githubToken,
   cwd = process.cwd(),
   prTitle = "Version Packages",
@@ -431,6 +433,9 @@ export async function runVersion({
       cwd,
     });
   }
+
+  // Update lock file
+  await exec(packageManager, ['install'], { cwd, env: { ...process.env, YARN_ENABLE_IMMUTABLE_INSTALLS: "false" } });
 
   let searchQuery = `repo:${repo}+state:open+head:${versionBranch}+base:${branch}+is:pull-request`;
   let searchResultPromise = octokit.rest.search.issuesAndPullRequests({

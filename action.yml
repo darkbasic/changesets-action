@@ -10,6 +10,10 @@ inputs:
   version:
     description: "The command to update version, edit CHANGELOG, read and delete changesets. Default to `changeset version` if not provided"
     required: false
+  packageManager:
+    description: "The package manager used to update the lock file"
+    required: false
+    default: yarn
   cwd:
     description: Sets the cwd for the node process. Default to `process.cwd()`
     required: false

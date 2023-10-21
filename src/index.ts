@@ -126,6 +126,7 @@ function extractCreateGithubReleases(
     case hasChangesets:
       const { pullRequestNumber } = await runVersion({
         script: getOptionalInput("version"),
+        packageManager: core.getInput("packageManager"),
         githubToken,
         prTitle: getOptionalInput("title"),
         commitMessage: getOptionalInput("commit"),
